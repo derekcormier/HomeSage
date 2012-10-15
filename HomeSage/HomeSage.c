@@ -11,11 +11,16 @@
 #include "lcd.h"
 #include "adc.h"
 
+FILE LCDstream = FDEV_SETUP_STREAM (putCharLCD, getCharLCD, _FDEV_SETUP_RW);
+
 int main(void)
 {
+	initSerialLCD();
 	initPeakDet();
+	
+	//stdout = &LCDstream;
     while(1)
     {
-       resetPeakDet();
+		fprintf(&LCDstream, "U");
     }
 }

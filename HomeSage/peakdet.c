@@ -12,7 +12,7 @@
 void initPeakDet(void)			// POST: Sets up the pin(s) for output
 {
 	DDRC |= 0b00000001;			// Set PORTC pin 0 to output
-//	resetPeakDet();				// Initial reset of peak detector			
+	resetPeakDet();				// Initial reset of peak detector			
 }
 
 void resetPeakDet(void)			// POST: Resets current sensor peak detector

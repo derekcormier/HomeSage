@@ -3,23 +3,29 @@ HomeSage.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000010c  00000000  00000000  00000054  2**1
+  0 .data         0000000e  00800100  000001b0  00000224  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001b0  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .stab         000006cc  00000000  00000000  00000160  2**2
+  2 .stab         000006cc  00000000  00000000  00000234  2**2
                   CONTENTS, READONLY, DEBUGGING
-  2 .stabstr      00000085  00000000  00000000  0000082c  2**0
+  3 .stabstr      00000085  00000000  00000000  00000900  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_aranges 000000a0  00000000  00000000  000008b8  2**3
+  4 .debug_aranges 000000e0  00000000  00000000  00000988  2**3
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   0000048f  00000000  00000000  00000958  2**0
+  5 .debug_info   000007a3  00000000  00000000  00000a68  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 0000016e  00000000  00000000  00000de7  2**0
+  6 .debug_abbrev 0000036d  00000000  00000000  0000120b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   00000378  00000000  00000000  00000f55  2**0
+  7 .debug_line   000005ef  00000000  00000000  00001578  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  00000058  00000000  00000000  000012d0  2**2
+  8 .debug_frame  000000d4  00000000  00000000  00001b68  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    00000107  00000000  00000000  00001328  2**0
+  9 .debug_str    000001b4  00000000  00000000  00001c3c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000099  00000000  00000000  00001df0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00001e89  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,20 +79,20 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	ec e0       	ldi	r30, 0x0C	; 12
+  9e:	e0 eb       	ldi	r30, 0xB0	; 176
   a0:	f1 e0       	ldi	r31, 0x01	; 1
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
   a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
   a8:	07 90       	elpm	r0, Z+
   aa:	0d 92       	st	X+, r0
-  ac:	a0 30       	cpi	r26, 0x00	; 0
+  ac:	ae 30       	cpi	r26, 0x0E	; 14
   ae:	b1 07       	cpc	r27, r17
   b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
 
 000000b2 <__do_clear_bss>:
   b2:	11 e0       	ldi	r17, 0x01	; 1
-  b4:	a0 e0       	ldi	r26, 0x00	; 0
+  b4:	ae e0       	ldi	r26, 0x0E	; 14
   b6:	b1 e0       	ldi	r27, 0x01	; 1
   b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
 
@@ -94,80 +100,195 @@ Disassembly of section .text:
   ba:	1d 92       	st	X+, r1
 
 000000bc <.do_clear_bss_start>:
-  bc:	a0 30       	cpi	r26, 0x00	; 0
+  bc:	ae 30       	cpi	r26, 0x0E	; 14
   be:	b1 07       	cpc	r27, r17
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
   c2:	0e 94 67 00 	call	0xce	; 0xce <main>
-  c6:	0c 94 84 00 	jmp	0x108	; 0x108 <_exit>
+  c6:	0c 94 d6 00 	jmp	0x1ac	; 0x1ac <_exit>
 
 000000ca <__bad_interrupt>:
   ca:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000ce <main>:
-#include "lcd.h"
-#include "adc.h"
+
+FILE LCDstream = FDEV_SETUP_STREAM (putCharLCD, getCharLCD, _FDEV_SETUP_RW);
 
 int main(void)
 {
+	initSerialLCD();
+  ce:	0e 94 73 00 	call	0xe6	; 0xe6 <initSerialLCD>
 	initPeakDet();
-  ce:	0e 94 6c 00 	call	0xd8	; 0xd8 <initPeakDet>
+  d2:	0e 94 a6 00 	call	0x14c	; 0x14c <initPeakDet>
+	
+	//stdout = &LCDstream;
     while(1)
     {
-       resetPeakDet();
-  d2:	0e 94 6e 00 	call	0xdc	; 0xdc <resetPeakDet>
-  d6:	fd cf       	rjmp	.-6      	; 0xd2 <main+0x4>
+		fprintf(&LCDstream, "U");
+  d6:	c0 e0       	ldi	r28, 0x00	; 0
+  d8:	d1 e0       	ldi	r29, 0x01	; 1
+  da:	85 e5       	ldi	r24, 0x55	; 85
+  dc:	90 e0       	ldi	r25, 0x00	; 0
+  de:	be 01       	movw	r22, r28
+  e0:	0e 94 aa 00 	call	0x154	; 0x154 <fputc>
+  e4:	fa cf       	rjmp	.-12     	; 0xda <main+0xc>
 
-000000d8 <initPeakDet>:
-#include <util/delay.h>
-#include "peakdet.h"
+000000e6 <initSerialLCD>:
+#include "lcd.h"
 
-void initPeakDet(void)			// POST: Sets up the pin(s) for output
+
+void initSerialLCD(void)			// POST: Initializes serial communtication for the Serial LCD
 {
-	DDRC |= 0b00000001;			// Set PORTC pin 0 to output
-  d8:	38 9a       	sbi	0x07, 0	; 7
-//	resetPeakDet();				// Initial reset of peak detector			
+	UBRR1L = 0b00110011;			// Set UBRR1 to 51, for 9600 baud
+  e6:	83 e3       	ldi	r24, 0x33	; 51
+  e8:	80 93 cc 00 	sts	0x00CC, r24
+	UBRR1H = 0;
+  ec:	10 92 cd 00 	sts	0x00CD, r1
+	
+	DDRD |= 0b00001000;
+  f0:	53 9a       	sbi	0x0a, 3	; 10
+	
+	UCSR1B = (1 << RXEN1) | (1 << TXEN1);		// Enable recieve and transmit lines
+  f2:	88 e1       	ldi	r24, 0x18	; 24
+  f4:	80 93 c9 00 	sts	0x00C9, r24
+	
+	UCSR1C = (1 << UCSZ11) | (1 << UCSZ10);	// Frame: 8-bit, no parity, 1 stop bit
+  f8:	86 e0       	ldi	r24, 0x06	; 6
+  fa:	80 93 ca 00 	sts	0x00CA, r24
 }
-  da:	08 95       	ret
+  fe:	08 95       	ret
 
-000000dc <resetPeakDet>:
+00000100 <putCharLCD>:
+
+void putCharLCD(unsigned char data)
+{
+	while (!(UCSR1A & (1<<UDRE1)));			// Wait for the transmit buffer to be empty
+ 100:	e8 ec       	ldi	r30, 0xC8	; 200
+ 102:	f0 e0       	ldi	r31, 0x00	; 0
+ 104:	90 81       	ld	r25, Z
+ 106:	95 ff       	sbrs	r25, 5
+ 108:	fd cf       	rjmp	.-6      	; 0x104 <putCharLCD+0x4>
+	
+	UDR1 = data;							// Put data in buffer and send
+ 10a:	80 93 ce 00 	sts	0x00CE, r24
+}
+ 10e:	08 95       	ret
+
+00000110 <getCharLCD>:
+
+unsigned char getCharLCD(void)			// POST: Send character to the LCD
+{
+	while (!(UCSR1A & (1<<RXC1)));			// Wait for data to be received
+ 110:	e8 ec       	ldi	r30, 0xC8	; 200
+ 112:	f0 e0       	ldi	r31, 0x00	; 0
+ 114:	80 81       	ld	r24, Z
+ 116:	88 23       	and	r24, r24
+ 118:	ec f7       	brge	.-6      	; 0x114 <getCharLCD+0x4>
+	
+	return UDR1;							// Get data from buffer
+ 11a:	80 91 ce 00 	lds	r24, 0x00CE
+}
+ 11e:	08 95       	ret
+
+00000120 <resetPeakDet>:
+	resetPeakDet();				// Initial reset of peak detector			
+}
 
 void resetPeakDet(void)			// POST: Resets current sensor peak detector
 {
 	PORTC = 0b00000001;			// Drain stored voltage from peak detector
-  dc:	81 e0       	ldi	r24, 0x01	; 1
-  de:	88 b9       	out	0x08, r24	; 8
+ 120:	81 e0       	ldi	r24, 0x01	; 1
+ 122:	88 b9       	out	0x08, r24	; 8
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  e0:	8f ed       	ldi	r24, 0xDF	; 223
-  e2:	93 e9       	ldi	r25, 0x93	; 147
-  e4:	a4 e0       	ldi	r26, 0x04	; 4
-  e6:	81 50       	subi	r24, 0x01	; 1
-  e8:	90 40       	sbci	r25, 0x00	; 0
-  ea:	a0 40       	sbci	r26, 0x00	; 0
-  ec:	e1 f7       	brne	.-8      	; 0xe6 <resetPeakDet+0xa>
-  ee:	00 c0       	rjmp	.+0      	; 0xf0 <resetPeakDet+0x14>
-  f0:	00 00       	nop
+ 124:	8f ed       	ldi	r24, 0xDF	; 223
+ 126:	93 e9       	ldi	r25, 0x93	; 147
+ 128:	a4 e0       	ldi	r26, 0x04	; 4
+ 12a:	81 50       	subi	r24, 0x01	; 1
+ 12c:	90 40       	sbci	r25, 0x00	; 0
+ 12e:	a0 40       	sbci	r26, 0x00	; 0
+ 130:	e1 f7       	brne	.-8      	; 0x12a <resetPeakDet+0xa>
+ 132:	00 c0       	rjmp	.+0      	; 0x134 <resetPeakDet+0x14>
+ 134:	00 00       	nop
 	_delay_ms(1500);			// Wait long enough to discharge capacitor
 	PORTC = 0b00000000;					// Close NMOS to begin storing voltage
-  f2:	18 b8       	out	0x08, r1	; 8
-  f4:	8f ed       	ldi	r24, 0xDF	; 223
-  f6:	93 e9       	ldi	r25, 0x93	; 147
-  f8:	a4 e0       	ldi	r26, 0x04	; 4
-  fa:	81 50       	subi	r24, 0x01	; 1
-  fc:	90 40       	sbci	r25, 0x00	; 0
-  fe:	a0 40       	sbci	r26, 0x00	; 0
- 100:	e1 f7       	brne	.-8      	; 0xfa <resetPeakDet+0x1e>
- 102:	00 c0       	rjmp	.+0      	; 0x104 <resetPeakDet+0x28>
- 104:	00 00       	nop
+ 136:	18 b8       	out	0x08, r1	; 8
+ 138:	8f ed       	ldi	r24, 0xDF	; 223
+ 13a:	93 e9       	ldi	r25, 0x93	; 147
+ 13c:	a4 e0       	ldi	r26, 0x04	; 4
+ 13e:	81 50       	subi	r24, 0x01	; 1
+ 140:	90 40       	sbci	r25, 0x00	; 0
+ 142:	a0 40       	sbci	r26, 0x00	; 0
+ 144:	e1 f7       	brne	.-8      	; 0x13e <resetPeakDet+0x1e>
+ 146:	00 c0       	rjmp	.+0      	; 0x148 <resetPeakDet+0x28>
+ 148:	00 00       	nop
 	_delay_ms(1500);
- 106:	08 95       	ret
+ 14a:	08 95       	ret
 
-00000108 <_exit>:
- 108:	f8 94       	cli
+0000014c <initPeakDet>:
+#include <util/delay.h>
+#include "peakdet.h"
 
-0000010a <__stop_program>:
- 10a:	ff cf       	rjmp	.-2      	; 0x10a <__stop_program>
+void initPeakDet(void)			// POST: Sets up the pin(s) for output
+{
+	DDRC |= 0b00000001;			// Set PORTC pin 0 to output
+ 14c:	38 9a       	sbi	0x07, 0	; 7
+	resetPeakDet();				// Initial reset of peak detector			
+ 14e:	0e 94 90 00 	call	0x120	; 0x120 <resetPeakDet>
+}
+ 152:	08 95       	ret
+
+00000154 <fputc>:
+ 154:	0f 93       	push	r16
+ 156:	1f 93       	push	r17
+ 158:	cf 93       	push	r28
+ 15a:	df 93       	push	r29
+ 15c:	8c 01       	movw	r16, r24
+ 15e:	eb 01       	movw	r28, r22
+ 160:	8b 81       	ldd	r24, Y+3	; 0x03
+ 162:	81 ff       	sbrs	r24, 1
+ 164:	1b c0       	rjmp	.+54     	; 0x19c <fputc+0x48>
+ 166:	82 ff       	sbrs	r24, 2
+ 168:	0d c0       	rjmp	.+26     	; 0x184 <fputc+0x30>
+ 16a:	2e 81       	ldd	r18, Y+6	; 0x06
+ 16c:	3f 81       	ldd	r19, Y+7	; 0x07
+ 16e:	8c 81       	ldd	r24, Y+4	; 0x04
+ 170:	9d 81       	ldd	r25, Y+5	; 0x05
+ 172:	28 17       	cp	r18, r24
+ 174:	39 07       	cpc	r19, r25
+ 176:	64 f4       	brge	.+24     	; 0x190 <fputc+0x3c>
+ 178:	e8 81       	ld	r30, Y
+ 17a:	f9 81       	ldd	r31, Y+1	; 0x01
+ 17c:	01 93       	st	Z+, r16
+ 17e:	f9 83       	std	Y+1, r31	; 0x01
+ 180:	e8 83       	st	Y, r30
+ 182:	06 c0       	rjmp	.+12     	; 0x190 <fputc+0x3c>
+ 184:	e8 85       	ldd	r30, Y+8	; 0x08
+ 186:	f9 85       	ldd	r31, Y+9	; 0x09
+ 188:	80 2f       	mov	r24, r16
+ 18a:	09 95       	icall
+ 18c:	00 97       	sbiw	r24, 0x00	; 0
+ 18e:	31 f4       	brne	.+12     	; 0x19c <fputc+0x48>
+ 190:	8e 81       	ldd	r24, Y+6	; 0x06
+ 192:	9f 81       	ldd	r25, Y+7	; 0x07
+ 194:	01 96       	adiw	r24, 0x01	; 1
+ 196:	9f 83       	std	Y+7, r25	; 0x07
+ 198:	8e 83       	std	Y+6, r24	; 0x06
+ 19a:	02 c0       	rjmp	.+4      	; 0x1a0 <fputc+0x4c>
+ 19c:	0f ef       	ldi	r16, 0xFF	; 255
+ 19e:	1f ef       	ldi	r17, 0xFF	; 255
+ 1a0:	c8 01       	movw	r24, r16
+ 1a2:	df 91       	pop	r29
+ 1a4:	cf 91       	pop	r28
+ 1a6:	1f 91       	pop	r17
+ 1a8:	0f 91       	pop	r16
+ 1aa:	08 95       	ret
+
+000001ac <_exit>:
+ 1ac:	f8 94       	cli
+
+000001ae <__stop_program>:
+ 1ae:	ff cf       	rjmp	.-2      	; 0x1ae <__stop_program>
