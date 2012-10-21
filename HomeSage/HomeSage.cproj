@@ -33,7 +33,7 @@
       </OverrideVtorValue>
       <Channel>
         <host>127.0.0.1</host>
-        <port>59658</port>
+        <port>61832</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
@@ -52,17 +52,17 @@
       </ToolOptions>
     </com_atmel_avrdbg_tool_ispmk2>
     <com_atmel_avrdbg_tool_simulator>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
-      <ToolName xmlns="">AVR Simulator</ToolName>
-      <ToolNumber xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolName>AVR Simulator</ToolName>
+      <ToolNumber>
       </ToolNumber>
-      <KeepTimersRunning xmlns="">true</KeepTimersRunning>
-      <OverrideVtor xmlns="">false</OverrideVtor>
-      <OverrideVtorValue xmlns="">
+      <KeepTimersRunning>true</KeepTimersRunning>
+      <OverrideVtor>false</OverrideVtor>
+      <OverrideVtorValue>
       </OverrideVtorValue>
-      <Channel xmlns="">
+      <Channel>
         <host>127.0.0.1</host>
-        <port>51469</port>
+        <port>61832</port>
         <ssl>False</ssl>
       </Channel>
     </com_atmel_avrdbg_tool_simulator>

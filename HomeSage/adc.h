@@ -9,8 +9,12 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-void lcdSerialInit(void);
+void initSerialADC(void);
 
-void lcdSendString(char string[]);
+void transmitADC(char data);
+
+char recieveADC(void);
+
+void getValueADC(void);
 
 #endif /* ADC_H_ */

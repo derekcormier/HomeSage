@@ -10,9 +10,10 @@ lcd.d lcd.o: .././lcd.c \
  c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/avr/version.h \
  c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/avr/fuse.h \
  c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/avr/lock.h \
+ c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/string.h \
+ c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/include/stddef.h \
  .././lcd.h \
- c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/stdlib.h \
- c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/include/stddef.h
+ c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/stdlib.h
 
 c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/avr/io.h:
 
@@ -36,8 +37,10 @@ c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.
 
 c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/avr/lock.h:
 
+c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/string.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/include/stddef.h:
+
 .././lcd.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/../../../../avr/include/stdlib.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ studio\ 6.0\extensions\atmel\avrgcc\3.4.0.65\avrtoolchain\bin\../lib/gcc/avr/4.6.2/include/stddef.h:

@@ -3,29 +3,27 @@ HomeSage.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000e  00800100  000001b0  00000224  2**0
+  0 .data         00000032  00800100  00000256  000002ca  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001b0  00000000  00000000  00000074  2**1
+  1 .text         00000256  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .stab         000006cc  00000000  00000000  00000234  2**2
+  2 .stab         000006cc  00000000  00000000  000002fc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      00000085  00000000  00000000  00000900  2**0
+  3 .stabstr      00000085  00000000  00000000  000009c8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_aranges 000000e0  00000000  00000000  00000988  2**3
+  4 .debug_aranges 000000e0  00000000  00000000  00000a50  2**3
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000007a3  00000000  00000000  00000a68  2**0
+  5 .debug_info   00000844  00000000  00000000  00000b30  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000036d  00000000  00000000  0000120b  2**0
+  6 .debug_abbrev 00000412  00000000  00000000  00001374  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000005ef  00000000  00000000  00001578  2**0
+  7 .debug_line   000006d7  00000000  00000000  00001786  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000d4  00000000  00000000  00001b68  2**2
+  8 .debug_frame  00000148  00000000  00000000  00001e60  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000001b4  00000000  00000000  00001c3c  2**0
+  9 .debug_str    000001c0  00000000  00000000  00001fa8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000099  00000000  00000000  00001df0  2**0
-                  CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001e89  2**0
+ 10 .debug_loc    000000f6  00000000  00000000  00002168  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -79,20 +77,20 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e0 eb       	ldi	r30, 0xB0	; 176
-  a0:	f1 e0       	ldi	r31, 0x01	; 1
+  9e:	e6 e5       	ldi	r30, 0x56	; 86
+  a0:	f2 e0       	ldi	r31, 0x02	; 2
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
   a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
   a8:	07 90       	elpm	r0, Z+
   aa:	0d 92       	st	X+, r0
-  ac:	ae 30       	cpi	r26, 0x0E	; 14
+  ac:	a2 33       	cpi	r26, 0x32	; 50
   ae:	b1 07       	cpc	r27, r17
   b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
 
 000000b2 <__do_clear_bss>:
   b2:	11 e0       	ldi	r17, 0x01	; 1
-  b4:	ae e0       	ldi	r26, 0x0E	; 14
+  b4:	a2 e3       	ldi	r26, 0x32	; 50
   b6:	b1 e0       	ldi	r27, 0x01	; 1
   b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
 
@@ -100,195 +98,364 @@ Disassembly of section .text:
   ba:	1d 92       	st	X+, r1
 
 000000bc <.do_clear_bss_start>:
-  bc:	ae 30       	cpi	r26, 0x0E	; 14
+  bc:	a2 33       	cpi	r26, 0x32	; 50
   be:	b1 07       	cpc	r27, r17
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
-  c2:	0e 94 67 00 	call	0xce	; 0xce <main>
-  c6:	0c 94 d6 00 	jmp	0x1ac	; 0x1ac <_exit>
+  c2:	0e 94 a7 00 	call	0x14e	; 0x14e <main>
+  c6:	0c 94 29 01 	jmp	0x252	; 0x252 <_exit>
 
 000000ca <__bad_interrupt>:
   ca:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-000000ce <main>:
+000000ce <initSerialADC>:
+#include "adc.h"
+#include "lcd.h"
+
+void initSerialADC(void)
+{
+	DDRB = (1<<DDB4)|(1<<DDB5)|(1<<DDB7);
+  ce:	80 eb       	ldi	r24, 0xB0	; 176
+  d0:	84 b9       	out	0x04, r24	; 4
+	SPCR = (1<<SPE)|(1<<MSTR);
+  d2:	80 e5       	ldi	r24, 0x50	; 80
+  d4:	8c bd       	out	0x2c, r24	; 44
+}
+  d6:	08 95       	ret
+
+000000d8 <transmitADC>:
+
+void transmitADC(char data)
+{
+	SPDR = data;
+  d8:	8e bd       	out	0x2e, r24	; 46
+	while(!(SPSR & (1<<SPIF)));
+  da:	0d b4       	in	r0, 0x2d	; 45
+  dc:	07 fe       	sbrs	r0, 7
+  de:	fd cf       	rjmp	.-6      	; 0xda <transmitADC+0x2>
+}
+  e0:	08 95       	ret
+
+000000e2 <recieveADC>:
+
+char recieveADC(void)
+{
+/* Wait for reception complete */
+while(!(SPSR & (1<<SPIF)))
+  e2:	0d b4       	in	r0, 0x2d	; 45
+  e4:	07 fe       	sbrs	r0, 7
+  e6:	fd cf       	rjmp	.-6      	; 0xe2 <recieveADC>
+;
+/* Return Data Register */
+return SPDR;
+  e8:	8e b5       	in	r24, 0x2e	; 46
+}	
+  ea:	08 95       	ret
+
+000000ec <getValueADC>:
+
+void getValueADC(void)
+{
+  ec:	cf 93       	push	r28
+	PORTB |= (0<<PB4);
+  ee:	85 b1       	in	r24, 0x05	; 5
+  f0:	85 b9       	out	0x05, r24	; 5
+	PORTB |= (0<<PB4);
+  f2:	85 b1       	in	r24, 0x05	; 5
+  f4:	85 b9       	out	0x05, r24	; 5
+	char high=0b00000000;
+	char low=0b00000000;
+	high=SPSR;
+  f6:	8d b5       	in	r24, 0x2d	; 45
+	putCharLCD(high);
+  f8:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	putStrLCD("in loop\n\r");
+  fc:	80 e0       	ldi	r24, 0x00	; 0
+  fe:	91 e0       	ldi	r25, 0x01	; 1
+ 100:	0e 94 e9 00 	call	0x1d2	; 0x1d2 <putStrLCD>
+	transmitADC(0b00001100);
+ 104:	8c e0       	ldi	r24, 0x0C	; 12
+ 106:	0e 94 6c 00 	call	0xd8	; 0xd8 <transmitADC>
+	putStrLCD("transmitted\n\r");
+ 10a:	8a e0       	ldi	r24, 0x0A	; 10
+ 10c:	91 e0       	ldi	r25, 0x01	; 1
+ 10e:	0e 94 e9 00 	call	0x1d2	; 0x1d2 <putStrLCD>
+	high = recieveADC();
+ 112:	0e 94 71 00 	call	0xe2	; 0xe2 <recieveADC>
+ 116:	c8 2f       	mov	r28, r24
+	putStrLCD("recieved\n\r");
+ 118:	88 e1       	ldi	r24, 0x18	; 24
+ 11a:	91 e0       	ldi	r25, 0x01	; 1
+ 11c:	0e 94 e9 00 	call	0x1d2	; 0x1d2 <putStrLCD>
+	//low = recieveADC();
+	PORTB |= (0<<PB4);
+ 120:	85 b1       	in	r24, 0x05	; 5
+ 122:	85 b9       	out	0x05, r24	; 5
+	
+	putCharLCD(high);
+ 124:	8c 2f       	mov	r24, r28
+ 126:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	putCharLCD(low);
+ 12a:	80 e0       	ldi	r24, 0x00	; 0
+ 12c:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+ 130:	cf 91       	pop	r28
+ 132:	08 95       	ret
+
+00000134 <init_interrupt>:
+	//GICR |= (1 << INT0);
+	//GICR |= (1 << INT1); 
+
+	// Initializes the mode of the interrupts
+	// Makes the external interrupts trigger on a falling edge
+	MCUCR &= ~(1 << ISC00);
+ 134:	85 b7       	in	r24, 0x35	; 53
+ 136:	8e 7f       	andi	r24, 0xFE	; 254
+ 138:	85 bf       	out	0x35, r24	; 53
+	MCUCR |= (1 << ISC01);
+ 13a:	85 b7       	in	r24, 0x35	; 53
+ 13c:	82 60       	ori	r24, 0x02	; 2
+ 13e:	85 bf       	out	0x35, r24	; 53
+	MCUCR &= ~(1 << ISC10);
+ 140:	85 b7       	in	r24, 0x35	; 53
+ 142:	8b 7f       	andi	r24, 0xFB	; 251
+ 144:	85 bf       	out	0x35, r24	; 53
+	MCUCR |= (1 << ISC11);
+ 146:	85 b7       	in	r24, 0x35	; 53
+ 148:	88 60       	ori	r24, 0x08	; 8
+ 14a:	85 bf       	out	0x35, r24	; 53
+}
+ 14c:	08 95       	ret
+
+0000014e <main>:
 
 FILE LCDstream = FDEV_SETUP_STREAM (putCharLCD, getCharLCD, _FDEV_SETUP_RW);
 
 int main(void)
 {
+	init_interrupt();
+ 14e:	0e 94 9a 00 	call	0x134	; 0x134 <init_interrupt>
 	initSerialLCD();
-  ce:	0e 94 73 00 	call	0xe6	; 0xe6 <initSerialLCD>
+ 152:	0e 94 ba 00 	call	0x174	; 0x174 <initSerialLCD>
 	initPeakDet();
-  d2:	0e 94 a6 00 	call	0x14c	; 0x14c <initPeakDet>
+ 156:	0e 94 25 01 	call	0x24a	; 0x24a <initPeakDet>
+	
+	sei();
+ 15a:	78 94       	sei
 	
 	//stdout = &LCDstream;
     while(1)
     {
-		fprintf(&LCDstream, "U");
-  d6:	c0 e0       	ldi	r28, 0x00	; 0
-  d8:	d1 e0       	ldi	r29, 0x01	; 1
-  da:	85 e5       	ldi	r24, 0x55	; 85
-  dc:	90 e0       	ldi	r25, 0x00	; 0
-  de:	be 01       	movw	r22, r28
-  e0:	0e 94 aa 00 	call	0x154	; 0x154 <fputc>
-  e4:	fa cf       	rjmp	.-12     	; 0xda <main+0xc>
-
-000000e6 <initSerialLCD>:
-#include "lcd.h"
-
-
-void initSerialLCD(void)			// POST: Initializes serial communtication for the Serial LCD
-{
-	UBRR1L = 0b00110011;			// Set UBRR1 to 51, for 9600 baud
-  e6:	83 e3       	ldi	r24, 0x33	; 51
-  e8:	80 93 cc 00 	sts	0x00CC, r24
-	UBRR1H = 0;
-  ec:	10 92 cd 00 	sts	0x00CD, r1
-	
-	DDRD |= 0b00001000;
-  f0:	53 9a       	sbi	0x0a, 3	; 10
-	
-	UCSR1B = (1 << RXEN1) | (1 << TXEN1);		// Enable recieve and transmit lines
-  f2:	88 e1       	ldi	r24, 0x18	; 24
-  f4:	80 93 c9 00 	sts	0x00C9, r24
-	
-	UCSR1C = (1 << UCSZ11) | (1 << UCSZ10);	// Frame: 8-bit, no parity, 1 stop bit
-  f8:	86 e0       	ldi	r24, 0x06	; 6
-  fa:	80 93 ca 00 	sts	0x00CA, r24
-}
-  fe:	08 95       	ret
-
-00000100 <putCharLCD>:
-
-void putCharLCD(unsigned char data)
-{
-	while (!(UCSR1A & (1<<UDRE1)));			// Wait for the transmit buffer to be empty
- 100:	e8 ec       	ldi	r30, 0xC8	; 200
- 102:	f0 e0       	ldi	r31, 0x00	; 0
- 104:	90 81       	ld	r25, Z
- 106:	95 ff       	sbrs	r25, 5
- 108:	fd cf       	rjmp	.-6      	; 0x104 <putCharLCD+0x4>
-	
-	UDR1 = data;							// Put data in buffer and send
- 10a:	80 93 ce 00 	sts	0x00CE, r24
-}
- 10e:	08 95       	ret
-
-00000110 <getCharLCD>:
-
-unsigned char getCharLCD(void)			// POST: Send character to the LCD
-{
-	while (!(UCSR1A & (1<<RXC1)));			// Wait for data to be received
- 110:	e8 ec       	ldi	r30, 0xC8	; 200
- 112:	f0 e0       	ldi	r31, 0x00	; 0
- 114:	80 81       	ld	r24, Z
- 116:	88 23       	and	r24, r24
- 118:	ec f7       	brge	.-6      	; 0x114 <getCharLCD+0x4>
-	
-	return UDR1;							// Get data from buffer
- 11a:	80 91 ce 00 	lds	r24, 0x00CE
-}
- 11e:	08 95       	ret
-
-00000120 <resetPeakDet>:
-	resetPeakDet();				// Initial reset of peak detector			
-}
-
-void resetPeakDet(void)			// POST: Resets current sensor peak detector
-{
-	PORTC = 0b00000001;			// Drain stored voltage from peak detector
- 120:	81 e0       	ldi	r24, 0x01	; 1
- 122:	88 b9       	out	0x08, r24	; 8
+		
+		getValueADC();
+ 15c:	0e 94 76 00 	call	0xec	; 0xec <getValueADC>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 124:	8f ed       	ldi	r24, 0xDF	; 223
- 126:	93 e9       	ldi	r25, 0x93	; 147
- 128:	a4 e0       	ldi	r26, 0x04	; 4
- 12a:	81 50       	subi	r24, 0x01	; 1
- 12c:	90 40       	sbci	r25, 0x00	; 0
- 12e:	a0 40       	sbci	r26, 0x00	; 0
- 130:	e1 f7       	brne	.-8      	; 0x12a <resetPeakDet+0xa>
- 132:	00 c0       	rjmp	.+0      	; 0x134 <resetPeakDet+0x14>
- 134:	00 00       	nop
+ 160:	8f e3       	ldi	r24, 0x3F	; 63
+ 162:	9d e0       	ldi	r25, 0x0D	; 13
+ 164:	a3 e0       	ldi	r26, 0x03	; 3
+ 166:	81 50       	subi	r24, 0x01	; 1
+ 168:	90 40       	sbci	r25, 0x00	; 0
+ 16a:	a0 40       	sbci	r26, 0x00	; 0
+ 16c:	e1 f7       	brne	.-8      	; 0x166 <main+0x18>
+ 16e:	00 c0       	rjmp	.+0      	; 0x170 <main+0x22>
+ 170:	00 00       	nop
+ 172:	f4 cf       	rjmp	.-24     	; 0x15c <main+0xe>
+
+00000174 <initSerialLCD>:
+#include <string.h>
+#include "lcd.h"
+
+void initSerialLCD(void)			// POST: Initializes serial communtication for the Serial LCD
+{
+	UBRR1L = 0b00110011;			// Set UBRR1 to 51, for 9600 baud
+ 174:	83 e3       	ldi	r24, 0x33	; 51
+ 176:	80 93 cc 00 	sts	0x00CC, r24
+	UBRR1H = 0;
+ 17a:	10 92 cd 00 	sts	0x00CD, r1
+	
+	DDRD |= 0b00001000;
+ 17e:	53 9a       	sbi	0x0a, 3	; 10
+	
+	UCSR1B = (1 << RXEN1) | (1 << TXEN1);		// Enable recieve and transmit lines
+ 180:	88 e1       	ldi	r24, 0x18	; 24
+ 182:	80 93 c9 00 	sts	0x00C9, r24
+	
+	UCSR1C = (1 << UCSZ11) | (1 << UCSZ10);	// Frame: 8-bit, no parity, 1 stop bit
+ 186:	86 e0       	ldi	r24, 0x06	; 6
+ 188:	80 93 ca 00 	sts	0x00CA, r24
+}
+ 18c:	08 95       	ret
+
+0000018e <putCharLCD>:
+	while(getCharLCD() != SLCD_INIT_DONE);
+}
+
+void putCharLCD(unsigned char data)
+{
+	while (!(UCSR1A & (1<<UDRE1)));			// Wait for the transmit buffer to be empty
+ 18e:	e8 ec       	ldi	r30, 0xC8	; 200
+ 190:	f0 e0       	ldi	r31, 0x00	; 0
+ 192:	90 81       	ld	r25, Z
+ 194:	95 ff       	sbrs	r25, 5
+ 196:	fd cf       	rjmp	.-6      	; 0x192 <putCharLCD+0x4>
+	
+	UDR1 = data;							// Put data in buffer and send
+ 198:	80 93 ce 00 	sts	0x00CE, r24
+}
+ 19c:	08 95       	ret
+
+0000019e <getCharLCD>:
+
+unsigned char getCharLCD(void)			// POST: Send character to the LCD
+{
+	while (!(UCSR1A & (1<<RXC1)));			// Wait for data to be received
+ 19e:	e8 ec       	ldi	r30, 0xC8	; 200
+ 1a0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a2:	80 81       	ld	r24, Z
+ 1a4:	88 23       	and	r24, r24
+ 1a6:	ec f7       	brge	.-6      	; 0x1a2 <getCharLCD+0x4>
+	
+	return UDR1;							// Get data from buffer
+ 1a8:	80 91 ce 00 	lds	r24, 0x00CE
+}
+ 1ac:	08 95       	ret
+
+000001ae <initLCD>:
+	UCSR1C = (1 << UCSZ11) | (1 << UCSZ10);	// Frame: 8-bit, no parity, 1 stop bit
+}
+
+void initLCD(void)
+{
+	while(getCharLCD() != UART_READY);
+ 1ae:	0e 94 cf 00 	call	0x19e	; 0x19e <getCharLCD>
+ 1b2:	83 3a       	cpi	r24, 0xA3	; 163
+ 1b4:	e1 f7       	brne	.-8      	; 0x1ae <initLCD>
+	
+	putCharLCD(SLCD_CONTROL_HEADER);		// Send bytes to initialize serial LCD
+ 1b6:	8f e9       	ldi	r24, 0x9F	; 159
+ 1b8:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	putCharLCD(SLCD_POWER_ON);
+ 1bc:	83 e8       	ldi	r24, 0x83	; 131
+ 1be:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	putCharLCD(SLCD_INIT_ACK);
+ 1c2:	85 ea       	ldi	r24, 0xA5	; 165
+ 1c4:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	
+	while(getCharLCD() != SLCD_INIT_DONE);
+ 1c8:	0e 94 cf 00 	call	0x19e	; 0x19e <getCharLCD>
+ 1cc:	8a 3a       	cpi	r24, 0xAA	; 170
+ 1ce:	e1 f7       	brne	.-8      	; 0x1c8 <initLCD+0x1a>
+}
+ 1d0:	08 95       	ret
+
+000001d2 <putStrLCD>:
+	
+	return UDR1;							// Get data from buffer
+}
+
+void putStrLCD(char str[])
+{
+ 1d2:	ef 92       	push	r14
+ 1d4:	ff 92       	push	r15
+ 1d6:	0f 93       	push	r16
+ 1d8:	1f 93       	push	r17
+ 1da:	cf 93       	push	r28
+ 1dc:	df 93       	push	r29
+ 1de:	f8 2e       	mov	r15, r24
+ 1e0:	e9 2e       	mov	r14, r25
+	for(int i=0; i<strlen(str); i++)
+ 1e2:	08 2f       	mov	r16, r24
+ 1e4:	19 2f       	mov	r17, r25
+ 1e6:	c0 e0       	ldi	r28, 0x00	; 0
+ 1e8:	d0 e0       	ldi	r29, 0x00	; 0
+ 1ea:	06 c0       	rjmp	.+12     	; 0x1f8 <putStrLCD+0x26>
+	{
+		putCharLCD(str[i]);
+ 1ec:	f8 01       	movw	r30, r16
+ 1ee:	81 91       	ld	r24, Z+
+ 1f0:	8f 01       	movw	r16, r30
+ 1f2:	0e 94 c7 00 	call	0x18e	; 0x18e <putCharLCD>
+	return UDR1;							// Get data from buffer
+}
+
+void putStrLCD(char str[])
+{
+	for(int i=0; i<strlen(str); i++)
+ 1f6:	21 96       	adiw	r28, 0x01	; 1
+ 1f8:	ef 2d       	mov	r30, r15
+ 1fa:	fe 2d       	mov	r31, r14
+ 1fc:	df 01       	movw	r26, r30
+ 1fe:	0d 90       	ld	r0, X+
+ 200:	00 20       	and	r0, r0
+ 202:	e9 f7       	brne	.-6      	; 0x1fe <putStrLCD+0x2c>
+ 204:	11 97       	sbiw	r26, 0x01	; 1
+ 206:	ae 1b       	sub	r26, r30
+ 208:	bf 0b       	sbc	r27, r31
+ 20a:	ca 17       	cp	r28, r26
+ 20c:	db 07       	cpc	r29, r27
+ 20e:	70 f3       	brcs	.-36     	; 0x1ec <putStrLCD+0x1a>
+	{
+		putCharLCD(str[i]);
+	}	
+ 210:	df 91       	pop	r29
+ 212:	cf 91       	pop	r28
+ 214:	1f 91       	pop	r17
+ 216:	0f 91       	pop	r16
+ 218:	ff 90       	pop	r15
+ 21a:	ef 90       	pop	r14
+ 21c:	08 95       	ret
+
+0000021e <resetPeakDet>:
+	resetPeakDet();				// Initial reset of peak detector			
+}
+
+void resetPeakDet(void)			// POST: Resets current sensor peak detector
+{
+	PORTC = 0b00000001;			// Drain stored voltage from peak detector
+ 21e:	81 e0       	ldi	r24, 0x01	; 1
+ 220:	88 b9       	out	0x08, r24	; 8
+ 222:	8f ed       	ldi	r24, 0xDF	; 223
+ 224:	93 e9       	ldi	r25, 0x93	; 147
+ 226:	a4 e0       	ldi	r26, 0x04	; 4
+ 228:	81 50       	subi	r24, 0x01	; 1
+ 22a:	90 40       	sbci	r25, 0x00	; 0
+ 22c:	a0 40       	sbci	r26, 0x00	; 0
+ 22e:	e1 f7       	brne	.-8      	; 0x228 <resetPeakDet+0xa>
+ 230:	00 c0       	rjmp	.+0      	; 0x232 <resetPeakDet+0x14>
+ 232:	00 00       	nop
 	_delay_ms(1500);			// Wait long enough to discharge capacitor
 	PORTC = 0b00000000;					// Close NMOS to begin storing voltage
- 136:	18 b8       	out	0x08, r1	; 8
- 138:	8f ed       	ldi	r24, 0xDF	; 223
- 13a:	93 e9       	ldi	r25, 0x93	; 147
- 13c:	a4 e0       	ldi	r26, 0x04	; 4
- 13e:	81 50       	subi	r24, 0x01	; 1
- 140:	90 40       	sbci	r25, 0x00	; 0
- 142:	a0 40       	sbci	r26, 0x00	; 0
- 144:	e1 f7       	brne	.-8      	; 0x13e <resetPeakDet+0x1e>
- 146:	00 c0       	rjmp	.+0      	; 0x148 <resetPeakDet+0x28>
- 148:	00 00       	nop
+ 234:	18 b8       	out	0x08, r1	; 8
+ 236:	8f ed       	ldi	r24, 0xDF	; 223
+ 238:	93 e9       	ldi	r25, 0x93	; 147
+ 23a:	a4 e0       	ldi	r26, 0x04	; 4
+ 23c:	81 50       	subi	r24, 0x01	; 1
+ 23e:	90 40       	sbci	r25, 0x00	; 0
+ 240:	a0 40       	sbci	r26, 0x00	; 0
+ 242:	e1 f7       	brne	.-8      	; 0x23c <resetPeakDet+0x1e>
+ 244:	00 c0       	rjmp	.+0      	; 0x246 <resetPeakDet+0x28>
+ 246:	00 00       	nop
 	_delay_ms(1500);
- 14a:	08 95       	ret
+ 248:	08 95       	ret
 
-0000014c <initPeakDet>:
+0000024a <initPeakDet>:
 #include <util/delay.h>
 #include "peakdet.h"
 
 void initPeakDet(void)			// POST: Sets up the pin(s) for output
 {
 	DDRC |= 0b00000001;			// Set PORTC pin 0 to output
- 14c:	38 9a       	sbi	0x07, 0	; 7
+ 24a:	38 9a       	sbi	0x07, 0	; 7
 	resetPeakDet();				// Initial reset of peak detector			
- 14e:	0e 94 90 00 	call	0x120	; 0x120 <resetPeakDet>
+ 24c:	0e 94 0f 01 	call	0x21e	; 0x21e <resetPeakDet>
 }
- 152:	08 95       	ret
+ 250:	08 95       	ret
 
-00000154 <fputc>:
- 154:	0f 93       	push	r16
- 156:	1f 93       	push	r17
- 158:	cf 93       	push	r28
- 15a:	df 93       	push	r29
- 15c:	8c 01       	movw	r16, r24
- 15e:	eb 01       	movw	r28, r22
- 160:	8b 81       	ldd	r24, Y+3	; 0x03
- 162:	81 ff       	sbrs	r24, 1
- 164:	1b c0       	rjmp	.+54     	; 0x19c <fputc+0x48>
- 166:	82 ff       	sbrs	r24, 2
- 168:	0d c0       	rjmp	.+26     	; 0x184 <fputc+0x30>
- 16a:	2e 81       	ldd	r18, Y+6	; 0x06
- 16c:	3f 81       	ldd	r19, Y+7	; 0x07
- 16e:	8c 81       	ldd	r24, Y+4	; 0x04
- 170:	9d 81       	ldd	r25, Y+5	; 0x05
- 172:	28 17       	cp	r18, r24
- 174:	39 07       	cpc	r19, r25
- 176:	64 f4       	brge	.+24     	; 0x190 <fputc+0x3c>
- 178:	e8 81       	ld	r30, Y
- 17a:	f9 81       	ldd	r31, Y+1	; 0x01
- 17c:	01 93       	st	Z+, r16
- 17e:	f9 83       	std	Y+1, r31	; 0x01
- 180:	e8 83       	st	Y, r30
- 182:	06 c0       	rjmp	.+12     	; 0x190 <fputc+0x3c>
- 184:	e8 85       	ldd	r30, Y+8	; 0x08
- 186:	f9 85       	ldd	r31, Y+9	; 0x09
- 188:	80 2f       	mov	r24, r16
- 18a:	09 95       	icall
- 18c:	00 97       	sbiw	r24, 0x00	; 0
- 18e:	31 f4       	brne	.+12     	; 0x19c <fputc+0x48>
- 190:	8e 81       	ldd	r24, Y+6	; 0x06
- 192:	9f 81       	ldd	r25, Y+7	; 0x07
- 194:	01 96       	adiw	r24, 0x01	; 1
- 196:	9f 83       	std	Y+7, r25	; 0x07
- 198:	8e 83       	std	Y+6, r24	; 0x06
- 19a:	02 c0       	rjmp	.+4      	; 0x1a0 <fputc+0x4c>
- 19c:	0f ef       	ldi	r16, 0xFF	; 255
- 19e:	1f ef       	ldi	r17, 0xFF	; 255
- 1a0:	c8 01       	movw	r24, r16
- 1a2:	df 91       	pop	r29
- 1a4:	cf 91       	pop	r28
- 1a6:	1f 91       	pop	r17
- 1a8:	0f 91       	pop	r16
- 1aa:	08 95       	ret
+00000252 <_exit>:
+ 252:	f8 94       	cli
 
-000001ac <_exit>:
- 1ac:	f8 94       	cli
-
-000001ae <__stop_program>:
- 1ae:	ff cf       	rjmp	.-2      	; 0x1ae <__stop_program>
+00000254 <__stop_program>:
+ 254:	ff cf       	rjmp	.-2      	; 0x254 <__stop_program>

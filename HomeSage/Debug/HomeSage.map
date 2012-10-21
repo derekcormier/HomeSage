@@ -6,8 +6,6 @@ c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/a
                               adc.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
                               adc.o (__do_clear_bss)
-c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
-                              HomeSage.o (fputc)
 
 Memory Configuration
 
@@ -125,7 +123,7 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x1b0
+.text           0x00000000      0x256
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -216,33 +214,36 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
                 0x000000ca                __vector_16
                 0x000000ca                __vector_18
                 0x000000ca                __vector_20
- .text          0x000000ce        0x0 adc.o
- .text          0x000000ce       0x18 HomeSage.o
-                0x000000ce                main
- .text          0x000000e6       0x3a lcd.o
-                0x000000e6                initSerialLCD
-                0x00000100                putCharLCD
-                0x00000110                getCharLCD
- .text          0x00000120       0x34 peakdet.o
-                0x00000120                resetPeakDet
-                0x0000014c                initPeakDet
- .text          0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .text          0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .text          0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .text          0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
-                0x00000154                . = ALIGN (0x2)
+ .text          0x000000ce       0x66 adc.o
+                0x000000ce                initSerialADC
+                0x000000d8                transmitADC
+                0x000000e2                recieveADC
+                0x000000ec                getValueADC
+ .text          0x00000134       0x40 HomeSage.o
+                0x00000134                init_interrupt
+                0x0000014e                main
+ .text          0x00000174       0xaa lcd.o
+                0x00000174                initSerialLCD
+                0x0000018e                putCharLCD
+                0x0000019e                getCharLCD
+                0x000001ae                initLCD
+                0x000001d2                putStrLCD
+ .text          0x0000021e       0x34 peakdet.o
+                0x0000021e                resetPeakDet
+                0x0000024a                initPeakDet
+ .text          0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .text          0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .text          0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+                0x00000252                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .text.libgcc   0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .text.libgcc   0x00000154        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .text.avr-libc
-                0x00000154       0x58 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
-                0x00000154                fputc
-                0x000001ac                . = ALIGN (0x2)
+ .text.libgcc   0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .text.libgcc   0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+                0x00000252                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000001ac        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
-                0x000001ac                _exit
-                0x000001ac                exit
+ .fini9         0x00000252        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                0x00000252                _exit
+                0x00000252                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -261,55 +262,54 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000001ac        0x4 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00000252        0x4 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000001b0                _etext = .
+                0x00000256                _etext = .
 
-.data           0x00800100        0xe load address 0x000001b0
+.data           0x00800100       0x32 load address 0x00000256
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm1284p.o
- .data          0x00800100        0x0 adc.o
- .data          0x00800100        0xe HomeSage.o
-                0x00800100                LCDstream
- .data          0x0080010e        0x0 lcd.o
- .data          0x0080010e        0x0 peakdet.o
- .data          0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .data          0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .data          0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .data          0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .data          0x00800100       0x23 adc.o
+ .data          0x00800123        0xe HomeSage.o
+                0x00800123                LCDstream
+ .data          0x00800131        0x0 lcd.o
+ .data          0x00800131        0x0 peakdet.o
+ .data          0x00800131        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .data          0x00800131        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .data          0x00800131        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
  *(.data*)
  *(.rodata)
  *(.rodata*)
  *(.gnu.linkonce.d*)
-                0x0080010e                . = ALIGN (0x2)
-                0x0080010e                _edata = .
-                0x0080010e                PROVIDE (__data_end, .)
+                0x00800132                . = ALIGN (0x2)
+ *fill*         0x00800131        0x1 00
+                0x00800132                _edata = .
+                0x00800132                PROVIDE (__data_end, .)
 
-.bss            0x0080010e        0x0
-                0x0080010e                PROVIDE (__bss_start, .)
+.bss            0x00800132        0x0
+                0x00800132                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm1284p.o
- .bss           0x0080010e        0x0 adc.o
- .bss           0x0080010e        0x0 HomeSage.o
- .bss           0x0080010e        0x0 lcd.o
- .bss           0x0080010e        0x0 peakdet.o
- .bss           0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .bss           0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .bss           0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .bss           0x0080010e        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .bss           0x00800132        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51/crtm1284p.o
+ .bss           0x00800132        0x0 adc.o
+ .bss           0x00800132        0x0 HomeSage.o
+ .bss           0x00800132        0x0 lcd.o
+ .bss           0x00800132        0x0 peakdet.o
+ .bss           0x00800132        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .bss           0x00800132        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .bss           0x00800132        0x0 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
  *(.bss*)
  *(COMMON)
-                0x0080010e                PROVIDE (__bss_end, .)
-                0x000001b0                __data_load_start = LOADADDR (.data)
-                0x000001be                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00800132                PROVIDE (__bss_end, .)
+                0x00000256                __data_load_start = LOADADDR (.data)
+                0x00000288                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080010e        0x0
-                0x0080010e                PROVIDE (__noinit_start, .)
+.noinit         0x00800132        0x0
+                0x00800132                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x0080010e                PROVIDE (__noinit_end, .)
-                0x0080010e                _end = .
-                0x0080010e                PROVIDE (__heap_start, .)
+                0x00800132                PROVIDE (__noinit_end, .)
+                0x00800132                _end = .
+                0x00800132                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -365,82 +365,78 @@ LOAD c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0
 .debug_aranges  0x00000000       0xe0
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 HomeSage.o
+                0x00000000       0x20 adc.o
  .debug_aranges
-                0x00000020       0x20 lcd.o
+                0x00000020       0x20 HomeSage.o
  .debug_aranges
-                0x00000040       0x20 peakdet.o
+                0x00000040       0x20 lcd.o
  .debug_aranges
-                0x00000060       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+                0x00000060       0x20 peakdet.o
  .debug_aranges
-                0x00000080       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+                0x00000080       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
  .debug_aranges
-                0x000000a0       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
+                0x000000a0       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
  .debug_aranges
-                0x000000c0       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+                0x000000c0       0x20 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x7a3
+.debug_info     0x00000000      0x844
  *(.debug_info)
- .debug_info    0x00000000      0x169 HomeSage.o
- .debug_info    0x00000169       0xbe lcd.o
- .debug_info    0x00000227      0x17b peakdet.o
- .debug_info    0x000003a2       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_info    0x00000480       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_info    0x0000055e       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_info    0x0000063c      0x167 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_info    0x00000000       0xf6 adc.o
+ .debug_info    0x000000f6      0x219 HomeSage.o
+ .debug_info    0x0000030f      0x120 lcd.o
+ .debug_info    0x0000042f      0x17b peakdet.o
+ .debug_info    0x000005aa       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_info    0x00000688       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_info    0x00000766       0xde c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x36d
+.debug_abbrev   0x00000000      0x412
  *(.debug_abbrev)
- .debug_abbrev  0x00000000        0x1 adc.o
- .debug_abbrev  0x00000001       0xdd HomeSage.o
- .debug_abbrev  0x000000de       0x89 lcd.o
- .debug_abbrev  0x00000167       0xf1 peakdet.o
- .debug_abbrev  0x00000258       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_abbrev  0x0000026c       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_abbrev  0x00000280       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_abbrev  0x00000294       0xd9 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_abbrev  0x00000000       0xbc adc.o
+ .debug_abbrev  0x000000bc      0x159 HomeSage.o
+ .debug_abbrev  0x00000215       0xd0 lcd.o
+ .debug_abbrev  0x000002e5       0xf1 peakdet.o
+ .debug_abbrev  0x000003d6       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_abbrev  0x000003ea       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_abbrev  0x000003fe       0x14 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
 
-.debug_line     0x00000000      0x5ef
+.debug_line     0x00000000      0x6d7
  *(.debug_line)
- .debug_line    0x00000000        0x0 adc.o
- .debug_line    0x00000000       0xe9 HomeSage.o
- .debug_line    0x000000e9       0xec lcd.o
- .debug_line    0x000001d5      0x190 peakdet.o
- .debug_line    0x00000365       0x88 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
- .debug_line    0x000003ed       0x93 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
- .debug_line    0x00000480       0x8e c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
- .debug_line    0x0000050e       0xe1 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_line    0x00000000       0xf1 adc.o
+ .debug_line    0x000000f1      0x198 HomeSage.o
+ .debug_line    0x00000289      0x115 lcd.o
+ .debug_line    0x0000039e      0x190 peakdet.o
+ .debug_line    0x0000052e       0x88 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_exit.o)
+ .debug_line    0x000005b6       0x93 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_copy_data.o)
+ .debug_line    0x00000649       0x8e c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/avr51\libgcc.a(_clear_bss.o)
 
-.debug_frame    0x00000000       0xd4
+.debug_frame    0x00000000      0x148
  *(.debug_frame)
- .debug_frame   0x00000000       0x24 HomeSage.o
- .debug_frame   0x00000024       0x44 lcd.o
- .debug_frame   0x00000068       0x34 peakdet.o
- .debug_frame   0x0000009c       0x38 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_frame   0x00000000       0x5c adc.o
+ .debug_frame   0x0000005c       0x34 HomeSage.o
+ .debug_frame   0x00000090       0x84 lcd.o
+ .debug_frame   0x00000114       0x34 peakdet.o
 
-.debug_str      0x00000000      0x1b4
+.debug_str      0x00000000      0x1c0
  *(.debug_str)
- .debug_str     0x00000000       0xab HomeSage.o
-                                 0xe4 (size before relaxing)
- .debug_str     0x000000ab       0x2f lcd.o
-                                 0xd6 (size before relaxing)
- .debug_str     0x000000da       0x84 peakdet.o
+ .debug_str     0x00000000       0xaf adc.o
+                                 0xed (size before relaxing)
+ .debug_str     0x000000af       0xa8 HomeSage.o
+                                0x14f (size before relaxing)
+ .debug_str     0x00000157       0x41 lcd.o
+                                 0xed (size before relaxing)
+ .debug_str     0x00000198       0x28 peakdet.o
                                 0x126 (size before relaxing)
- .debug_str     0x0000015e       0x56 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
-                                 0xfb (size before relaxing)
 
-.debug_loc      0x00000000       0x99
+.debug_loc      0x00000000       0xf6
  *(.debug_loc)
- .debug_loc     0x00000000       0x99 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
+ .debug_loc     0x00000000       0x57 adc.o
+ .debug_loc     0x00000057       0x9f lcd.o
 
 .debug_macinfo
  *(.debug_macinfo)
 OUTPUT(HomeSage.elf elf32-avr)
 LOAD linker stubs
-
-.debug_ranges   0x00000000       0x10
- .debug_ranges  0x00000000       0x10 c:/program files (x86)/atmel/atmel studio 6.0/extensions/atmel/avrgcc/3.4.0.65/avrtoolchain/bin/../lib/gcc/avr/4.6.2/../../../../avr/lib/avr51\libc.a(fputc.o)
