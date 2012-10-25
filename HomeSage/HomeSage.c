@@ -12,25 +12,22 @@
 #include "lcd.h"
 #include "adc.h"
 
-#include <avr/interrupt.h>
-
-void init_interrupt(void);
+#define F_CPU 8000000UL
 
 FILE LCDstream = FDEV_SETUP_STREAM (putCharLCD, getCharLCD, _FDEV_SETUP_RW);
 
 int main(void)
 {
-	init_interrupt();
+	initSerialADC();
 	initSerialLCD();
 	initPeakDet();
-	
-	sei();
 	
 	//stdout = &LCDstream;
     while(1)
     {
-		
-		getValueADC();
-		_delay_ms(1000);
+		putStrLCD("ON\n\r");
+		//resetPeakDet();
+		getValueADC(1);
+		_delay_ms(10000);
     }
 }

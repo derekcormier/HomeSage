@@ -11,10 +11,14 @@
 
 void initSerialADC(void);
 
-void transmitADC(char data);
+char readWriteADC(char data);
 
-char recieveADC(void);
+//char recieveADC(void);
 
-void getValueADC(void);
+signed int getValueADC(int channel);
+
+double getCurrentADC(unsigned int ADCValue);
+
+double getVoltageADC(unsigned int ADCValue);
 
 #endif /* ADC_H_ */
