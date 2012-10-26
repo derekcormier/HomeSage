@@ -57,15 +57,15 @@ signed int getValueADC(int channel)
 	rLow += (rHigh<<8);
 	
 	itoa(rLow,str,10);
-	putStrLCD(str);
-	putStrLCD("\n\r");
+	putStrPC(str);
+	putStrPC("\n\r");
 	
 	//d =getCurrentADC(rLow);
 	d = getVoltageADC(rLow);
 	sprintf(str,"%f",d);
-	putStrLCD(str);
-	putCharLCD('A');
-	putStrLCD("\n\r");
+	putStrPC(str);
+	putCharPC('A');
+	putStrPC("\n\r");
 
 }
 

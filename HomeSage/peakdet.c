@@ -20,6 +20,6 @@ void resetPeakDet(void)			// POST: Resets current sensor peak detector
 {
 	PORTC = 0b00000001;			// Drain stored voltage from peak detector
 	_delay_ms(10000);			// Wait long enough to discharge capacitor
-	PORTC = 0b00000000;					// Close NMOS to begin storing voltage
+	PORTC = 0b00000000;			// Close NMOS to begin storing voltage
 	_delay_ms(10000);
 }

@@ -13,20 +13,42 @@
 #define UART_READY				0xA3
 #define SLCD_CONTROL_HEADER		0x9F
 #define SLCD_POWER_ON			0x83
+#define SLCD_POWER_OFF			0x82
 #define SLCD_INIT_ACK			0xA5
 #define SLCD_INIT_DONE			0xAA
+#define SLCD_CLEAR_DISPLAY		0x65
+#define SLCD_BACKLIGHT_ON		0x81
+#define SLCD_CURSOR_HEADER		0xFF
+#define SLCD_CHAR_HEADER		0xFE
 
 
 void initSerialLCD(void);
-// POST: Initializes serial communtication for the Serial LCD
+// POST: Initializes serial for LCD at 9600 baud, 8 bit, no parity, 1 stop bit
 
 void initLCD(void);
+// POST: Initializes serial communtication for the Serial LCD:
+//		16X2 characters with 5X8 dots font
+//		Display on
+//		Cursor off
+//		Blinking off
+//		Address increments by 1 from left to right
+//		No screen shift
+//		Backlight off 
 
-void putCharLCD(unsigned char data);
+void putByteLCD(unsigned char data);
+// POST: Sends one byte of data to the LCD
 
 unsigned char getCharLCD(void);
-// POST: Send character to the LCD
+// POST: Recieves one byte of data from the LCD
 
-void putStrLCD(char str[]);
+void WriteLCD(char str[]);
+// POST: Writes a string of characters to the LCD
+
+void backlightOnLCD(void);
+// POST: Turns on the LCD Backlight
+
+void setCursorLCD(int col, int row);
+// PRE:	 0<=col<=15, row = 0 or 1
+// POST: Sets the cursor to the specified column and row
 
 #endif /* LCD_H_ */

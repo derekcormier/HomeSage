@@ -38,6 +38,7 @@ C_SRCS +=  \
 ../adc.c \
 ../HomeSage.c \
 ../lcd.c \
+../pc.c \
 ../peakdet.c
 
 
@@ -51,6 +52,7 @@ OBJS +=  \
 adc.o \
 HomeSage.o \
 lcd.o \
+pc.o \
 peakdet.o
 
 
@@ -58,6 +60,7 @@ OBJS_AS_ARGS +=  \
 adc.o \
 HomeSage.o \
 lcd.o \
+pc.o \
 peakdet.o
 
 
@@ -65,6 +68,7 @@ C_DEPS +=  \
 adc.d \
 HomeSage.d \
 lcd.d \
+pc.d \
 peakdet.d
 
 
@@ -72,6 +76,7 @@ C_DEPS_AS_ARGS +=  \
 adc.d \
 HomeSage.d \
 lcd.d \
+pc.d \
 peakdet.d
 
 
@@ -84,6 +89,8 @@ ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 # AVR32/GNU C Compiler
+
+
 
 
 
