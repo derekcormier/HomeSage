@@ -18,6 +18,7 @@
 #define SLCD_INIT_DONE			0xAA
 #define SLCD_CLEAR_DISPLAY		0x65
 #define SLCD_BACKLIGHT_ON		0x81
+#define SLCD_BACKLIGHT_OFF		0x80
 #define SLCD_CURSOR_HEADER		0xFF
 #define SLCD_CHAR_HEADER		0xFE
 
@@ -41,14 +42,23 @@ void putByteLCD(unsigned char data);
 unsigned char getCharLCD(void);
 // POST: Recieves one byte of data from the LCD
 
-void WriteLCD(char str[]);
+void writeLCD(char str[]);
 // POST: Writes a string of characters to the LCD
 
 void backlightOnLCD(void);
 // POST: Turns on the LCD Backlight
 
+void backlightOffLCD(void);
+// POST: Turns off the LCD Backlight
+
 void setCursorLCD(int col, int row);
 // PRE:	 0<=col<=15, row = 0 or 1
 // POST: Sets the cursor to the specified column and row
+
+void clearScreenLCD(void);
+// POST: Clears the LCD screen
+
+void printLayoutLCD(double voltage, double current, double power);
+// POST: Prints values in a good format to the LCD
 
 #endif /* LCD_H_ */

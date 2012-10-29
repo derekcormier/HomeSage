@@ -8,5 +8,9 @@ HomeSage.c
 
 lcd.c
 
+pc.c
+
 peakdet.c
+
+pwm.c
 

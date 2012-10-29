@@ -8,7 +8,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "peakdet.h"
-#define F_CPU 8000000UL
+//#define F_CPU 8000000UL
 
 void initPeakDet(void)			// POST: Sets up the pin(s) for output
 {

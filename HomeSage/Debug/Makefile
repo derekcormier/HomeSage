@@ -38,7 +38,9 @@ C_SRCS +=  \
 ../adc.c \
 ../HomeSage.c \
 ../lcd.c \
-../peakdet.c
+../pc.c \
+../peakdet.c \
+../pwm.c
 
 
 PREPROCESSING_SRCS += 
@@ -51,28 +53,36 @@ OBJS +=  \
 adc.o \
 HomeSage.o \
 lcd.o \
-peakdet.o
+pc.o \
+peakdet.o \
+pwm.o
 
 
 OBJS_AS_ARGS +=  \
 adc.o \
 HomeSage.o \
 lcd.o \
-peakdet.o
+pc.o \
+peakdet.o \
+pwm.o
 
 
 C_DEPS +=  \
 adc.d \
 HomeSage.d \
 lcd.d \
-peakdet.d
+pc.d \
+peakdet.d \
+pwm.d
 
 
 C_DEPS_AS_ARGS +=  \
 adc.d \
 HomeSage.d \
 lcd.d \
-peakdet.d
+pc.d \
+peakdet.d \
+pwm.d
 
 
 OUTPUT_FILE_PATH +=HomeSage.elf
@@ -84,6 +94,10 @@ ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

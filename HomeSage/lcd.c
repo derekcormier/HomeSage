@@ -43,8 +43,27 @@ void initLCD(void)
 	while(getCharLCD() != SLCD_INIT_DONE);	// Check if LCD initialized properly
 }
 
+void printLayoutLCD(double voltage, double current, double power)
+{
+	char str[6];
+	
+	clearScreenLCD();
+	setCursorLCD(0,0);
+	snprintf(str,6,"%f",voltage);
+	writeLCD("V:");
+	writeLCD(str);
+	setCursorLCD(9,0);
+	snprintf(str,6,"%f",current);
+	writeLCD("I:");
+	writeLCD(str);
+	setCursorLCD(2,1);
+	snprintf(str,6,"%f",power);
+	writeLCD("Power:");
+	writeLCD(str);
+}
+
 void putByteLCD(unsigned char data)
-// POST: Sends one byte of data to the LCD
+	// POST: Sends one byte of data to the LCD
 {
 	while (!(UCSR1A & (1<<UDRE1)));			// Wait for the transmit buffer to be empty
 	
@@ -59,8 +78,8 @@ unsigned char getCharLCD(void)
 	return UDR1;							// Get data from buffer
 }
 
-void WriteLCD(char str[])
-// POST: Writes a string of characters to the LCD
+void writeLCD(char str[])
+	// POST: Writes a string of characters to the LCD
 {
 	putByteLCD(SLCD_CHAR_HEADER);			// Tell LCD to write follwing data to screen
 	
@@ -71,18 +90,32 @@ void WriteLCD(char str[])
 }
 
 void backlightOnLCD(void)
-// POST: Turns on the LCD Backlight
+	// POST: Turns on the LCD Backlight
 {
 	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight on
 	putByteLCD(SLCD_BACKLIGHT_ON);
 }	
 
+void backlightOffLCD(void)
+	// POST: Turns off the LCD Backlight
+{
+	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight off
+	putByteLCD(SLCD_BACKLIGHT_OFF);
+}	
+
 void setCursorLCD(int col, int row)
-// PRE:	 0<=col<=15, row = 0 or 1
-// POST: Sets the cursor to the specified column and row
+		// PRE:	 0<=col<=15, row = 0 or 1
+	// POST: Sets the cursor to the specified column and row
 {
 	putByteLCD(SLCD_CONTROL_HEADER);	
 	putByteLCD(SLCD_CURSOR_HEADER);			// Tell LCD next two bytes are coordinate for cursor
 	putByteLCD(col); 
 	putByteLCD(row);
+}
+
+void clearScreenLCD(void)
+	// POST: Clears the LCD screen
+{
+	putByteLCD(SLCD_CONTROL_HEADER);		// Clear the screen
+	putByteLCD(SLCD_CLEAR_DISPLAY);			
 }

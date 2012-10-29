@@ -39,7 +39,8 @@ C_SRCS +=  \
 ../HomeSage.c \
 ../lcd.c \
 ../pc.c \
-../peakdet.c
+../peakdet.c \
+../pwm.c
 
 
 PREPROCESSING_SRCS += 
@@ -53,7 +54,8 @@ adc.o \
 HomeSage.o \
 lcd.o \
 pc.o \
-peakdet.o
+peakdet.o \
+pwm.o
 
 
 OBJS_AS_ARGS +=  \
@@ -61,7 +63,8 @@ adc.o \
 HomeSage.o \
 lcd.o \
 pc.o \
-peakdet.o
+peakdet.o \
+pwm.o
 
 
 C_DEPS +=  \
@@ -69,7 +72,8 @@ adc.d \
 HomeSage.d \
 lcd.d \
 pc.d \
-peakdet.d
+peakdet.d \
+pwm.d
 
 
 C_DEPS_AS_ARGS +=  \
@@ -77,7 +81,8 @@ adc.d \
 HomeSage.d \
 lcd.d \
 pc.d \
-peakdet.d
+peakdet.d \
+pwm.d
 
 
 OUTPUT_FILE_PATH +=HomeSage.elf
@@ -100,10 +105,12 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 
 
 
+
+
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : (AVR_8_bit_GNU_Toolchain_3.4.0_663) 4.6.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -Os -fpack-struct -fshort-enums -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega1284p   -o"$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\AVRGCC\3.4.0.65\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DF_CPU=8000000  -Os -fpack-struct -fshort-enums -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"  -mmcu=atmega1284p   -o"$@" "$<" 
 	@echo Finished building: $<
 
 
