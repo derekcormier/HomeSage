@@ -36,6 +36,9 @@ void initLCD(void);
 //		No screen shift
 //		Backlight off 
 
+void printLayoutLCD(double voltage, double current, double power);
+// POST: Prints values in a tidy format to the LCD
+
 void putByteLCD(unsigned char data);
 // POST: Sends one byte of data to the LCD
 
@@ -57,8 +60,5 @@ void setCursorLCD(int col, int row);
 
 void clearScreenLCD(void);
 // POST: Clears the LCD screen
-
-void printLayoutLCD(double voltage, double current, double power);
-// POST: Prints values in a good format to the LCD
 
 #endif /* LCD_H_ */

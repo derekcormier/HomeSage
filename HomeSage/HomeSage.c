@@ -17,23 +17,32 @@
 
 int main(void)
 {
+	double current, voltage, power;
+	
 	initSerialLCD();
+	initSerialADC();
+	//interruptEnablePWM();
 	initLCD();
-	interruptEnablePWM();
+	initPeakDet();
 
 	backlightOnLCD();
+
 	
-    while(1)
-    {
-		writeLCD("hi");
-		_delay_ms(2000);
+		
+	while(1)
+	{
+		voltage = getVoltageADC(getValueADC(0));
+		resetPeakDet();
+		current = getCurrentADC(getValueADC(1));
+		power = getPowerADC(voltage, current);
 		clearScreenLCD();
-		setCursorLCD(0,0);
-    }
+		printLayoutLCD(voltage, current, 100.01);
+		_delay_ms(100);
+	}
 }
 
-ISR(PCINT2_vect)
+/*ISR(PCINT2_vect)
 {
 	writeLCD("meow");
 	_delay_ms(20);
-}
+}*/

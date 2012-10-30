@@ -13,10 +13,10 @@
 void initSerialLCD(void)
 	// POST: Initializes serial for LCD at 9600 baud, 8 bit, no parity, 1 stop bit
 {
-	UBRR1L = 0b00110011;			// Set UBRR1 to 51, for 9600 baud
+	UBRR1L = 0b00110011;						// Set UBRR1 to 51, for 9600 baud
 	UBRR1H = 0;
 	
-	DDRD |= 0b00001000;				// Set the TX line to output
+	DDRD |= 0b00001000;							// Set the TX line to output
 	
 	UCSR1B = (1 << RXEN1) | (1 << TXEN1);		// Enable recieve and transmit lines
 	
@@ -44,21 +44,22 @@ void initLCD(void)
 }
 
 void printLayoutLCD(double voltage, double current, double power)
+	// POST: Prints values in a tidy format to the LCD
 {
 	char str[6];
 	
-	clearScreenLCD();
-	setCursorLCD(0,0);
-	snprintf(str,6,"%f",voltage);
-	writeLCD("V:");
+	clearScreenLCD();					// Clear the LCD
+	setCursorLCD(0,0);					// Set Cursor to the origin
+	snprintf(str,6,"%f",voltage);		// Convert voltage to a sting of 5 characters
+	writeLCD("V:");						// Print "V:####.#"
 	writeLCD(str);
-	setCursorLCD(9,0);
-	snprintf(str,6,"%f",current);
-	writeLCD("I:");
+	setCursorLCD(9,0);					// Move cursor past halfway to "right justify"
+	snprintf(str,6,"%f",current);		// Convert current to a string of  5 characters
+	writeLCD("I:");						// Print "I:#.###"
 	writeLCD(str);
-	setCursorLCD(2,1);
-	snprintf(str,6,"%f",power);
-	writeLCD("Power:");
+	setCursorLCD(2,1);					// Set cursor so next part appears "center justified"
+	snprintf(str,6,"%f",power);			// Convert power to a string of 5 characters
+	writeLCD("Power:");					// Print "Power:###.#"
 	writeLCD(str);
 }
 
@@ -104,7 +105,7 @@ void backlightOffLCD(void)
 }	
 
 void setCursorLCD(int col, int row)
-		// PRE:	 0<=col<=15, row = 0 or 1
+	// PRE:	 0<=col<=15, row = 0 or 1
 	// POST: Sets the cursor to the specified column and row
 {
 	putByteLCD(SLCD_CONTROL_HEADER);	

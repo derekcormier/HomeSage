@@ -8,18 +8,19 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "peakdet.h"
-//#define F_CPU 8000000UL
 
-void initPeakDet(void)			// POST: Sets up the pin(s) for output
+void initPeakDet(void)			
+	// POST: Sets up the pin(s) for output
 {
-	DDRC |= 0b00000001;			// Set PORTC pin 0 to output
+	DDRD |= 0b10000000;			// Set PORTC pin 0 to output
 	resetPeakDet();				// Initial reset of peak detector			
 }
 
-void resetPeakDet(void)			// POST: Resets current sensor peak detector
+void resetPeakDet(void)			
+	// POST: Resets current sensor peak detector
 {
-	PORTC = 0b00000001;			// Drain stored voltage from peak detector
-	_delay_ms(10000);			// Wait long enough to discharge capacitor
-	PORTC = 0b00000000;			// Close NMOS to begin storing voltage
-	_delay_ms(10000);
+	PORTD |= 0b10000000;		// Drain stored voltage from peak detector
+	_delay_ms(400);				// Wait long enough to discharge capacitor a
+								//	significant amount
+	PORTD &= ~0b10000000;		// Close NMOS to begin storing voltage
 }

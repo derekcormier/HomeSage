@@ -21,10 +21,13 @@ signed int getValueADC(int channel);
 
 double getCurrentADC(unsigned int ADCValue);
 // PRE:  ADCValue is from getValueADC
-// POST: returns the current RMS corresponding to the ADC value
+// POST: Returns the current RMS corresponding to the ADC value
 
 double getVoltageADC(unsigned int ADCValue);
 // PRE:  ADCValue is from getValueADC
-// POST: retrun the voltage RMS corresponding the the ADC value
+// POST: Return the voltage RMS corresponding the the ADC value
+
+double getPowerADC(double voltage, double current);
+// POST: Return the average power
 
 #endif /* ADC_H_ */

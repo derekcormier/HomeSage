@@ -22,13 +22,15 @@ void initSerialADC(void)
 char readWriteADC(char data)
 	// POST: Writes a character to the ADC, and returns data from the ADC
 {
-	SPDR = data;
-	while(!(SPSR & (1<<SPIF)));
-	data = SPDR;
-	return data;
+	SPDR = data;						// Write data to the register to be sent
+	while(!(SPSR & (1<<SPIF)));			// Wait for data to be sent, recieved
+	data = SPDR;						
+	return data;						// Return data from the resgister
 }
 
 signed int getValueADC(int channel)
+	// PRE:  0<=channel<=7
+	// POST: Returns the 13-bit ADC value	
 {
 	int sHigh = 0;				// High byte to send to ADC
 	int sLow = 0;				// Low byte to send to ADC
@@ -55,15 +57,25 @@ signed int getValueADC(int channel)
 }
 
 double getCurrentADC(unsigned int ADCValue)
+	// PRE:  ADCValue is from getValueADC
+	// POST: Returns the current RMS corresponding to the ADC value
 {
 	double current = 0;
-	current = ((ADCValue*(1/323.57))-0.1142);
+	current = ((ADCValue*(1/699.96))-(93.149/699.96));	// Equation relating ADCValue to IRMS
 	return current;
 }
 
 double getVoltageADC(unsigned int ADCValue)
+	// PRE:  ADCValue is from getValueADC
+	// POST: Returns the voltage RMS corresponding the the ADC value
 {
 	double voltage = 0;
-	voltage = (ADCValue*(12.0/4095.0))+113.6;
+	voltage = (ADCValue*(12.0/4095.0))+113.6;			// Equation relating ADCValue to VRMS
 	return voltage;
+}
+
+double getPowerADC(double voltage, double current)
+	// POST: Return the average power
+{
+	return voltage*current;
 }

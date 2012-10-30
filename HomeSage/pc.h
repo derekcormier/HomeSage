@@ -14,11 +14,13 @@ void initSerialPC(void);
 // POST: Initializes serial communtication for the PC
 
 void putCharPC(unsigned char data);
+// POST: Sends one character to the PC
 
 unsigned char getCharPC(void);
-// POST: Send character to the PC
+// POST: Get a character from the PC
 
 void putStrPC(char str[]);
+// POST: Sends a string to the PC
 
 
 #endif /* PC_H_ */

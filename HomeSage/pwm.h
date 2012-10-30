@@ -9,9 +9,7 @@
 #ifndef PWM_H_
 #define PWM_H_
 
-void initPWM(void);
-// POST: Initializes the PWM
-
 void interruptEnablePWM(void);
+// POST: Enables PCINT2 at pin PORTC7, triggered at any edge
 
 #endif /* PWM_H_ */

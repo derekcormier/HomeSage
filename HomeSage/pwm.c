@@ -8,27 +8,18 @@
 #include <avr/interrupt.h>
 #include "pwm.h"
 
-void initPWM(void)
-// POST: Initializes the PWM
-{
-	TCCR0A |= (1 << WGM01);
-	TCCR1B |= (1 << CS02)|(1 << CS00);
-
-	OCR1A = 24999;
-}
-
 void interruptEnablePWM(void)
-// POST: External interrupt one is enabled on pin 0 of PORTA
+	// POST: Enables PCINT2 at pin PORTC7, triggered at any edge
 {
-	DDRC &= ~(1 << DDC7);
+	DDRC &= ~(1 << DDC7);		// Set pin PORTC7 to output
 	
-	PORTC |= (1 << PORTC7);
+	PORTC |= (1 << PORTC7);		// Enable internal pull-up resistor
 	
-	EICRA |= (1 << ISC00);
+	EICRA |= (1 << ISC00);		// Trigger interrupt on any edge
 	
-	PCICR |= (1 << PCIE2);
+	PCICR |= (1 << PCIE2);		// Enable PCINT2
 	
-	PCMSK2 |= (1 << PCINT23);
+	PCMSK2 |= (1 << PCINT23);	// Use PORTC7 for interrupt pin
 	
-	sei();
+	sei();						// Enable interrupts globally
 }
