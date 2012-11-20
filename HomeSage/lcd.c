@@ -46,15 +46,15 @@ void initLCD(void)
 void printLayoutLCD(double voltage, double current, double power)
 	// POST: Prints values in a tidy format to the LCD
 {
-	char str[6];
+	char str[7];
 	
 	clearScreenLCD();					// Clear the LCD
 	setCursorLCD(0,0);					// Set Cursor to the origin
 	snprintf(str,6,"%f",voltage);		// Convert voltage to a sting of 5 characters
 	writeLCD("V:");						// Print "V:####.#"
 	writeLCD(str);
-	setCursorLCD(9,0);					// Move cursor past halfway to "right justify"
-	snprintf(str,6,"%f",current);		// Convert current to a string of  5 characters
+	setCursorLCD(8,0);					// Move cursor past halfway to "right justify"
+	snprintf(str,7,"%f",current);		// Convert current to a string of  5 characters
 	writeLCD("I:");						// Print "I:#.###"
 	writeLCD(str);
 	setCursorLCD(2,1);					// Set cursor so next part appears "center justified"

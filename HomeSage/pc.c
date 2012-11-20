@@ -17,7 +17,7 @@ void initSerialPC(void)
 	
 	DDRD |= 0b00000010;
 	
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0);		// Enable recieve and transmit lines
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);		// Enable recieve and transmit lines
 	
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);		// Frame: 8-bit, no parity, 1 stop bit
 }

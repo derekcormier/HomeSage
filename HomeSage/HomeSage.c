@@ -19,30 +19,37 @@ int main(void)
 {
 	double current, voltage, power;
 	
-	initSerialLCD();
+	initSerialLCD();			// Initialize Serial
 	initSerialADC();
-	//interruptEnablePWM();
-	initLCD();
-	initPeakDet();
-
-	backlightOnLCD();
-
+	initSerialPC();
+	_delay_ms(500);				// Wait for LCD to power up before initializing
+	initLCD();					// Send initialization for LCD
 	
+	sei();
+	
+	while(1)					// Infinite loop
+	{	
+		voltage = getVoltageADC();					// Get voltage reading
+		current = getCurrentADC();					// Get current reading
+		power = getPowerADC(voltage, current);		// Calculate power
 		
-	while(1)
-	{
-		voltage = getVoltageADC(getValueADC(0));
-		resetPeakDet();
-		current = getCurrentADC(getValueADC(1));
-		power = getPowerADC(voltage, current);
-		clearScreenLCD();
-		printLayoutLCD(voltage, current, 100.01);
-		_delay_ms(100);
+		clearScreenLCD();							// Clear the LCD
+		printLayoutLCD(voltage, current, power);	// Print the values
+		_delay_ms(1000);							// Wait 1 one second before next update
 	}
 }
 
-/*ISR(PCINT2_vect)
+ISR(USART0_RX_vect)
 {
-	writeLCD("meow");
-	_delay_ms(20);
-}*/
+	char RecievedByte;
+	
+	RecievedByte = UDR0;
+	UDR0 = RecievedByte;
+	
+	if(RecievedByte == 'D')
+	{
+		clearScreenLCD();
+		setCursorLCD(0,0);
+		writeLCD("GOT D");
+	}	
+}

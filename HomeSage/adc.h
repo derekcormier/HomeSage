@@ -19,12 +19,10 @@ signed int getValueADC(int channel);
 // PRE:  0<=channel<=7
 // POST: Returns the 13-bit ADC value
 
-double getCurrentADC(unsigned int ADCValue);
-// PRE:  ADCValue is from getValueADC
+double getCurrentADC(void);
 // POST: Returns the current RMS corresponding to the ADC value
 
-double getVoltageADC(unsigned int ADCValue);
-// PRE:  ADCValue is from getValueADC
+double getVoltageADC(void);
 // POST: Return the voltage RMS corresponding the the ADC value
 
 double getPowerADC(double voltage, double current);

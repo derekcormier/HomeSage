@@ -7,6 +7,7 @@
 
 #include <avr/io.h>
 #include <stdlib.h>
+#include <math.h>
 #include <util/delay.h>
 #include "adc.h"
 #include "lcd.h"
@@ -56,21 +57,42 @@ signed int getValueADC(int channel)
 	return value;
 }
 
-double getCurrentADC(unsigned int ADCValue)
-	// PRE:  ADCValue is from getValueADC
+double getCurrentADC(void)
 	// POST: Returns the current RMS corresponding to the ADC value
 {
-	double current = 0;
-	current = ((ADCValue*(1/699.96))-(93.149/699.96));	// Equation relating ADCValue to IRMS
-	return current;
+	unsigned int samples = 6000;
+	signed int value[6000];
+	double ADCTotal=0;
+	char str[6];
+	
+	for(int i=0;i<samples;i++)
+	{
+		value[i]=(getValueADC(1)-2070);
+	}
+	
+	for(int j=0;j<samples;j++)
+	{
+		if(value[j] < 0)
+		{
+			value[j] = -value[j];
+		}
+	ADCTotal+= pow(value[j],2);
+	}	
+	
+return (sqrt(ADCTotal/samples)-1.95)/135.81;
 }
 
-double getVoltageADC(unsigned int ADCValue)
-	// PRE:  ADCValue is from getValueADC
+double getVoltageADC(void)
 	// POST: Returns the voltage RMS corresponding the the ADC value
 {
 	double voltage = 0;
-	voltage = (ADCValue*(12.0/4095.0))+113.6;			// Equation relating ADCValue to VRMS
+	double ADCValue = 0;
+	for(int i=0;i<1000;i++)
+	{
+		ADCValue += getValueADC(0);
+	}	
+	ADCValue = ADCValue / 1000.0;
+	voltage = ((ADCValue+36334)/320.85);			// Equation relating ADCValue to VRMS
 	return voltage;
 }
 
