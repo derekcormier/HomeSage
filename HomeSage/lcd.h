@@ -48,17 +48,21 @@ unsigned char getCharLCD(void);
 void writeLCD(char str[]);
 // POST: Writes a string of characters to the LCD
 
-void backlightOnLCD(void);
-// POST: Turns on the LCD Backlight
-
-void backlightOffLCD(void);
-// POST: Turns off the LCD Backlight
-
 void setCursorLCD(int col, int row);
 // PRE:	 0<=col<=15, row = 0 or 1
 // POST: Sets the cursor to the specified column and row
 
 void clearScreenLCD(void);
 // POST: Clears the LCD screen
+
+//--------------------UNUSED---------------------------//
+
+/*
+void backlightOnLCD(void);
+// POST: Turns on the LCD Backlight
+
+void backlightOffLCD(void);
+// POST: Turns off the LCD Backlight
+*/
 
 #endif /* LCD_H_ */

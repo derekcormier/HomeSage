@@ -8,16 +8,17 @@
 #include <avr/io.h>
 #include <string.h>
 #include "pc.h"
+#include "lcd.h"
 
 void initSerialPC(void)			
-	// POST: Initializes serial communtication for the PC
+	// POST: Initializes serial communication for the PC
 {
 	UBRR0L = 0b00110011;						// Set UBRR1 to 51, for 9600 baud
 	UBRR0H = 0;									// (for 8MHz clock)
 	
 	DDRD |= 0b00000010;
 	
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);		// Enable recieve and transmit lines
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);		// Enable receive and transmit lines
 	
 	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);		// Frame: 8-bit, no parity, 1 stop bit
 }
@@ -45,4 +46,25 @@ void putStrPC(char str[])
 	{
 		putCharPC(str[i]);
 	}	
+}
+
+void sendValuesPC(int device, double voltage, double current)
+{
+	char sendstr[19] = "";
+	char volt[6];
+	char curr[8];
+	
+	sendstr[0] = device + 0x30;
+	sendstr[1] = 0;
+	snprintf(volt, 6 , "%3.1f", voltage);
+	
+	strcat(sendstr, volt);
+	snprintf(curr, 8, "%2.7f", current);
+	strcat(sendstr, curr);
+	strcat(sendstr, "\r");
+	
+	putStrPC(&sendstr);
+	
+	setCursorLCD(0,1);
+	writeLCD(sendstr);
 }

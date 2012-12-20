@@ -13,7 +13,7 @@
 void initSerialLCD(void)
 	// POST: Initializes serial for LCD at 9600 baud, 8 bit, no parity, 1 stop bit
 {
-	UBRR1L = 0b00110011;						// Set UBRR1 to 51, for 9600 baud
+	UBRR1L = 0b00110100;						// Set UBRR1 to 51, for 9600 baud
 	UBRR1H = 0;
 	
 	DDRD |= 0b00001000;							// Set the TX line to output
@@ -90,20 +90,6 @@ void writeLCD(char str[])
 	}	
 }
 
-void backlightOnLCD(void)
-	// POST: Turns on the LCD Backlight
-{
-	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight on
-	putByteLCD(SLCD_BACKLIGHT_ON);
-}	
-
-void backlightOffLCD(void)
-	// POST: Turns off the LCD Backlight
-{
-	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight off
-	putByteLCD(SLCD_BACKLIGHT_OFF);
-}	
-
 void setCursorLCD(int col, int row)
 	// PRE:	 0<=col<=15, row = 0 or 1
 	// POST: Sets the cursor to the specified column and row
@@ -120,3 +106,22 @@ void clearScreenLCD(void)
 	putByteLCD(SLCD_CONTROL_HEADER);		// Clear the screen
 	putByteLCD(SLCD_CLEAR_DISPLAY);			
 }
+
+
+//--------------------UNUSED---------------------------//
+
+/*
+void backlightOnLCD(void)
+// POST: Turns on the LCD Backlight
+{
+	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight on
+	putByteLCD(SLCD_BACKLIGHT_ON);
+}
+
+void backlightOffLCD(void)
+// POST: Turns off the LCD Backlight
+{
+	putByteLCD(SLCD_CONTROL_HEADER);		// Turn backlight off
+	putByteLCD(SLCD_BACKLIGHT_OFF);
+}
+*/

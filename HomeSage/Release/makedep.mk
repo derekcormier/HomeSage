@@ -4,6 +4,8 @@
 
 adc.c
 
+circctrl.c
+
 HomeSage.c
 
 lcd.c
